@@ -27,6 +27,25 @@ CDialogDlg：是主窗口的实现
   - 方法二：右键按钮【添加事件处理程序】
   - ==方法三：双击按钮，自动生成响应函数==
 
+# CString 和 string 
+
+```c++
+CString cstr;
+string str;
+
+//CString转为string
+str = CT2A(cstr.GetString());
+
+//stirng转为CString
+cstr = str.c_str();
+
+// string转为char(数据库的字符串是char类型)
+char buf[255];
+buf = str.c_str();
+```
+
+
+
 # 模态框、非模态框
 
 - 鼠标响应事件：弹出模态框（阻塞的）
@@ -294,3 +313,25 @@ MessageBox(str);
 - 添加一个新的Dialog，需要右键【添加类】生成头文件
 
 - 打开【资源视图】，为标签类添加变量
+
+
+
+# 时间选择器
+
+- 【工具箱】添加【Data Time Picker】
+- 【属性】Format：短日期、时间
+- 时间格式转换：
+
+```c++
+CDateTimeCtrl in_date;	//短日期
+CTime in_date_t;
+in_date.GetTime(in_date_t); //转为CTime型
+CString in_date_CS = in_date_t.Format("%Y-%m-%d");	//转为CString型
+std::string in_date_s = CT2A(in_date_CS.GetString());	//转为string型
+
+CDateTimeCtrl in_time;	//时间
+CTime in_time_t;
+in_date.GetTime(in_time_t); //转为CTime型
+CString in_time_CS = in_time_t.Format("%H:%M:%S");	//转为CString型
+std::string in_time_s = CT2A(in_time_CS.GetString());	//转为string型
+```

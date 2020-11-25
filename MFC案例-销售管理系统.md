@@ -1,8 +1,52 @@
 # 销售管理系统
 
+创建MFC应用->【应用程序类型】单个文档->【项目样式】MFC Standard->【用户界面功能】命令行：使用经典菜单
+
+
+
+# 主窗口设置
+
+- 设置程序图标：将图标放置在项目根目录的`res`文件夹中，打开【资源视图】->右键【Icon】添加资源
+- 【类视图】->`CMainFrame`的`OnCreate`中设置主窗口
+  - 在`xxxDoc`的`OnNewDocument`中设置左侧标题
+
+```c++
+//设置图标
+SetClassLong(m_hWnd, GCL_HICON, (LONG)AfxGetApp()->LoadIconW(IDI_ICON1));
+
+//设置标题
+SetTitle(TEXT("销售管理系统"));
+
+//设置窗口大小
+//0, 0, 起点坐标x和y
+//800, 500, 窗口宽度和高度
+MoveWindow(0, 0, 800, 500);
+
+//将窗口移动到屏幕中央，CWnd::CenterWindow
+CenterWindow();
+```
+
 
 
 # 登录对话框
+
+- 绘制登录对话框
+- 为【Edit Control】添加变量，设置一些属性
+
+- 绘制好登录对话框后，需要在主窗口创建之前弹出登录窗口
+  - 【类视图】->`xxxApp`的`InitInstance()`中创建模态框形式的登录窗口：
+
+```c++
+//创建登录窗口，以模态框的方式创建
+CLoginDlg dlg;
+dlg.DoModal();
+
+CWinApp::InitInstance();
+```
+
+
+
+# 登录认证
 
 - 为两个输入框分别设置变量`m_user`、`m_pwd`
 
@@ -87,7 +131,7 @@ void SelectView::OnInitialUpdate()
 }
 ```
 
-- 3、添加树控件选项切换事件：【类视图】->重写【=TVN_SELCHANGED】
+- 3、添加树控件选项切换事件：【类视图】->消息【=TVN_SELCHANGED】
 
 ```c++
 void SelectView::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
